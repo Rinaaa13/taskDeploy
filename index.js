@@ -25,6 +25,11 @@ app.get('/say/:greeting', (req, res) => {
   res.send(greeting);
 });
 
+app.get('/work/:studing', (req, res) => {
+  const { studing } = req.params;
+  res.send(studing);
+});
+
 app.get('/',(req, res, next) => {
   res.send('Hello Express');
 })
