@@ -34,6 +34,10 @@ app.get('/',(req, res, next) => {
   res.send('Hello Express');
 })
 
+app.get('/protected', (req, res) => {
+  return res.status(401).send('Unauthorized');
+});
+
 app.use((err, req, res, next) => {
   res.send("Error Occurred");
 })
