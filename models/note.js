@@ -23,28 +23,28 @@ export const get = (id) => {
     return note;
 }
 
-// export const create = (title, content) => {
-//     const lastId = notes.length > 0 ? notes[notes.length - 1].id : 0;
-//     const newNote = {
-//       id: lastId + 1,
-//       title,
-//       content
-//     };
-//     notes.push(newNote);
-//     return newNote;
-// };
-
-export const create= (title, content) => {
-    const {10: lastid } =
-    notes [notes.length - 1];
+export const create = (title, content) => {
+    const lastId = notes.length > 0 ? notes[notes.length - 1].id : 0;
     const newNote = {
-        id: lastid + 1,
-        title,
-        content,
+      id: lastId + 1,
+      title,
+      content
     };
     notes.push(newNote);
     return newNote;
-}
+};
+
+// export const create= (title, content) => {
+//     const {10: lastid } =
+//     notes [notes.length - 1];
+//     const newNote = {
+//         id: lastid + 1,
+//         title,
+//         content,
+//     };
+//     notes.push(newNote);
+//     return newNote;
+// }
 
 export const update = (id, title, content) => {
     const index = notes. findIndex(
