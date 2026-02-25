@@ -24,6 +24,18 @@ router.get('/:id', (req, res, next) => {
 //     res.json(note);
 // });
 
+router.put('/:id', (req, res, next) => {
+    const id = Number(req.params.id);
+    const { title, content } = req.body;
+    try {
+        const note =
+        Note.update(id, title, content);
+        res.json(note);
+    } catch (e) {
+        next(e);
+    }
+});
+
 router.post('/', (req, res) => {
     const { title, content } = req.body;
     if (!title || !content) {
@@ -36,7 +48,7 @@ router.post('/', (req, res) => {
 router.delete('/:id', (req, res, next) => {
     const id = Number(req.params.id);
     try {
-        Note.delete(id);
+        Note.deleteNote(id);
         res.json({ result: 'success' });
     } catch (e) {
         next(e);

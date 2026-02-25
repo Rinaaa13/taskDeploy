@@ -17,7 +17,7 @@ export const get = (id) => {
     const note = notes.find(
     (note) => note.id === id
     );
-    if (!Inote) {
+    if (!note) {
         throw new Error('Note not found');
     }
     return note;
