@@ -12,3 +12,14 @@ let notes = [
       title
     }));
   };
+
+  export const create = (title, content) => {
+    const lastId = notes.length > 0 ? notes[notes.length - 1].id : 0;
+    const newNote = {
+      id: lastId + 1,
+      title,
+      content
+    };
+    notes.push(newNote);
+    return newNote;
+  };

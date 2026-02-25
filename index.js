@@ -1,7 +1,9 @@
-const app = express();
 import express from 'express';
 import noteRouter from './routes/notes.js'
 
+const app = express();
+
+app.use(express.json());
 // app.use((req, res, next) => {
 //   console.log(`Request ${req.path} harus lewat sini`);
 //   next();
