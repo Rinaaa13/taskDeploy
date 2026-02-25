@@ -1,4 +1,3 @@
-const express = require('express');
 const app = express();
 
 // app.use((req, res, next) => {
@@ -9,10 +8,6 @@ const app = express();
 //   console.log('Auth middleware dijalankan');
 //   next();
 // };
-// app.use(auth);
-// // app.get('/', (req, res) => {
-// //   res.send('Halo, nama saya Sarah');
-// // });
 app.use((req, res, next) => {
   if (false) {
     next(new Error('Not Found'));
@@ -20,6 +15,12 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+// app.use(auth);
+app.get('/', (req, res) => {
+  res.send('Halo, nama saya Sarah');
+});
+
 app.get('/say/:greeting', (req, res) => {
   const { greeting } = req.params;
   res.send(greeting);
@@ -30,9 +31,9 @@ app.get('/work/:studing', (req, res) => {
   res.send(studing);
 });
 
-app.get('/',(req, res, next) => {
-  res.send('Hello Express');
-})
+// app.get('/',(req, res, next) => {
+//   res.send('Hello Express');
+// })
 
 app.get('/protected', (req, res) => {
   return res.status(401).send('Unauthorized');
