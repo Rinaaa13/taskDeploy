@@ -8,6 +8,16 @@ router.get('/', (req, res) => {
   res.json(notes);
 });
 
+router.get('/:id', (req, res, next) => {
+    const id = Number(req.params.id);
+    try {
+        const note = Note.get(id);
+        res.json(note);
+    } catch (e) {
+        next(e);
+    }
+});
+
 router.post('/', (req, res) => {
     const { title, content } = req.body;
     if (!title || !content) {
@@ -15,6 +25,16 @@ router.post('/', (req, res) => {
     }
     const note = Note.create(title, content);
     res.status(201).json(note);
+});
+
+router.delete('/:id', (req, res, next) => {
+    const id = Number(req.params.id);
+    try {
+        Note.delete(id);
+        res.json({ result: 'success' });
+    } catch (e) {
+        next(e);
+    }
 });
 
 export default router;
