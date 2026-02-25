@@ -46,7 +46,11 @@ app.get('/protected', (req, res) => {
 app.use('/notes', noteRouter);
 
 app.use((err, req, res, next) => {
-  res.send("Error Occurred");
-})
+  console.error(err);
+  res.status(500).json({
+    message: err.message,
+    stack: err.stack,
+  });
+});
 
 app.listen(3000)
