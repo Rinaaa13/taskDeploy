@@ -1,4 +1,5 @@
 const app = express();
+import express from 'express';
 
 // app.use((req, res, next) => {
 //   console.log(`Request ${req.path} harus lewat sini`);
