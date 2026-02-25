@@ -1,5 +1,6 @@
 const app = express();
 import express from 'express';
+import noteRouter from './routes/notes.js'
 
 // app.use((req, res, next) => {
 //   console.log(`Request ${req.path} harus lewat sini`);
@@ -39,6 +40,8 @@ app.get('/work/:studing', (req, res) => {
 app.get('/protected', (req, res) => {
   return res.status(401).send('Unauthorized');
 });
+
+app.use('/notes', noteRouter);
 
 app.use((err, req, res, next) => {
   res.send("Error Occurred");
