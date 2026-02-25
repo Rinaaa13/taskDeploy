@@ -13,7 +13,7 @@ export const list = () => {
     }));
  };
 
-exports.get = (id) => {
+export const get = (id) => {
     const note = notes.find(
     (note) => note.id === id
     );
@@ -23,18 +23,30 @@ exports.get = (id) => {
     return note;
 }
 
-export const create = (title, content) => {
-    const lastId = notes.length > 0 ? notes[notes.length - 1].id : 0;
+// export const create = (title, content) => {
+//     const lastId = notes.length > 0 ? notes[notes.length - 1].id : 0;
+//     const newNote = {
+//       id: lastId + 1,
+//       title,
+//       content
+//     };
+//     notes.push(newNote);
+//     return newNote;
+// };
+
+export const create= (title, content) => {
+    const {10: lastid } =
+    notes [notes.length - 1];
     const newNote = {
-      id: lastId + 1,
-      title,
-      content
+        id: lastid + 1,
+        title,
+        content,
     };
     notes.push(newNote);
     return newNote;
-};
+}
 
-exports.update = (id, title, content) => {
+export const update = (id, title, content) => {
     const index = notes. findIndex(
       (note) => note.id === id
     );
@@ -48,7 +60,7 @@ exports.update = (id, title, content) => {
     return note;
 }
 
-exports.delete = (id) => {
+export const deleteNote = (id) => {
     if (!notes.some((note) => note.id === id)) {
         throw new Error(
         'Note not found for delete'

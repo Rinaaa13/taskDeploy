@@ -18,6 +18,12 @@ router.get('/:id', (req, res, next) => {
     }
 });
 
+// router.get('/:id', (req, res, next) => {
+//     const{ tittle, content } = req.body;
+//     const note = Note.get(id);
+//     res.json(note);
+// });
+
 router.post('/', (req, res) => {
     const { title, content } = req.body;
     if (!title || !content) {
