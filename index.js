@@ -1,7 +1,43 @@
 import express from 'express';
-import noteRouter from './routes/notes.js'
+import noteRouter from './routes/notes.js';
+import mongoose from 'mongoose';
 
 const app = express();
+
+const URI = 'mongodb+srv://sarahdb:sar25db1@coderin.8ktkdkr.mongodb.net/?appName=coderin';
+
+// ... (kode import express & mongoose kamu yang tadi)
+
+// async function main() {
+//   try {
+//     // 1. Membuat satu data
+//     const created = await Post.create({
+//       title: "First Title",
+//       content: "Ini konten pertama"
+//     });
+//     console.log("Data tunggal berhasil dibuat:", created);
+
+//     // 2. Membuat banyak data sekaligus (Bulk Create)
+//     const multipleCreated = await Post.create([
+//       { title: "Item 1", content: "Konten 1" },
+//       { title: "Item 2", content: "Konten 2" }
+//     ]);
+//     console.log("Banyak data berhasil dibuat:", multipleCreated);
+
+//   } catch (err) {
+//     console.error("Gagal mengisi data:", err);
+//   }
+// }
+
+// Jalankan fungsi main setelah koneksi DB berhasil
+mongoose.connect(URI)
+  .then(() => {
+    console.log('✅ Berhasil terhubung ke MongoDB');
+    // Contoh cek apakah model Post bisa dipakai
+    console.log('Model yang tersedia:', mongoose.modelNames());
+    // main(); 
+  })
+  .catch(err => console.error('❌ Gagal koneksi:', err));
 
 app.use(express.json());
 // app.use((req, res, next) => {

@@ -1,17 +1,24 @@
 import { Router } from 'express';
 import * as Note from '../models/note.js';
+import { Post } from '../models/index.js';
 
 const router = Router();
 
-router.get('/', (req, res) => {
-  const notes = Note.list();
-  res.json(notes);
+router.get('/', async (req, res, next) => {
+    try {
+        const notes = await Post.find();
+        res.json(notes);
+    } catch (error) {
+        next(error);
+    }
 });
 
-router.get('/:id', (req, res, next) => {
-    const id = Number(req.params.id);
+router.get('/:id', async (req, res, next) => {
+    const id = req.params.id;
     try {
-        const note = Note.get(id);
+        const note = await Post.findById(id); 
+        console.log(id);
+        if (!note) return res.status(404).json({ message: "Catatan tidak ditemukan" });
         res.json(note);
     } catch (e) {
         next(e);
@@ -24,32 +31,57 @@ router.get('/:id', (req, res, next) => {
 //     res.json(note);
 // });
 
-router.put('/:id', (req, res, next) => {
-    const id = Number(req.params.id);
+router.put('/:id', async (req, res, next) => {
+    const id = req.params.id; // Tidak perlu Number()
     const { title, content } = req.body;
+    
     try {
-        const note =
-        Note.update(id, title, content);
+        // Parameter: (id, data_baru, options)
+        const note = await Post.findByIdAndUpdate(
+            id, 
+            { title, content }, 
+            { new: true } 
+        );
+
+        if (!note) return res.status(404).json({ message: "Catatan tidak ditemukan" });
+        
         res.json(note);
     } catch (e) {
         next(e);
     }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res, next) => {
     const { title, content } = req.body;
     if (!title || !content) {
       return res.status(400).json({ error: 'Title and content are required' });
     }
-    const note = Note.create(title, content);
-    res.status(201).json(note);
+    try {
+        // Gunakan Post.create dari Mongoose untuk simpan ke MongoDB
+        const note = await Post.create({
+            title: title,
+            content: content
+        });
+
+        // Kirim respon data yang berhasil dibuat
+        res.status(201).json(note);
+    } catch (e) {
+        // Jika ada error (misal database mati), lempar ke middleware error
+        next(e);
+    }
+    // const note = Note.create(title, content);
+    // res.status(201).json(note);
 });
 
-router.delete('/:id', (req, res, next) => {
-    const id = Number(req.params.id);
+router.delete('/:id', async (req, res, next) => {
+    const id = req.params.id; // Tidak perlu Number()
+    
     try {
-        Note.deleteNote(id);
-        res.json({ result: 'success' });
+        const note = await Post.findByIdAndDelete(id);
+
+        if (!note) return res.status(404).json({ message: "Catatan tidak ditemukan" });
+
+        res.json({ result: 'success', message: 'Catatan berhasil dihapus' });
     } catch (e) {
         next(e);
     }
