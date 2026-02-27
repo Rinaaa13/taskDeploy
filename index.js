@@ -1,8 +1,10 @@
 import express from 'express';
 import noteRouter from './routes/notes.js';
 import mongoose from 'mongoose';
+import cors from 'cors';
 
 const app = express();
+app.use(cors());
 
 const URI = 'mongodb+srv://sarahdb:sar25db1@coderin.8ktkdkr.mongodb.net/?appName=coderin';
 
